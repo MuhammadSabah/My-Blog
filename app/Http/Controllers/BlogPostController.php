@@ -32,7 +32,8 @@ class BlogPostController extends Controller
         $newPost = BlogPost::create([
             'title' => $request->title,
             'body' => $request->body,
-            'user_id' => 1
+            // TODO: Change this to the logged in user's ID
+            'user_id' => $request->user()->id
         ]);
 
         return redirect('blog/' . $newPost->id);

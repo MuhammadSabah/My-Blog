@@ -9,7 +9,7 @@
             <form class="form-edit d-flex justify-content-between" method="post" action="Controllers/edit_controller.php" enctype="multipart/form-data">
                 <div class="image-box d-flex flex-column p-2 ">
                     <img id="uploadPreview" style="width: 260px; height: 260px;" />
-                    <input class="mt-2" id="uploadImage" type="file" name="image" onchange="PreviewImage();" value=" <?php echo isset($_SESSION['fileUrl']) ? $_SESSION['fileUrl'] : ''; ?>" />
+                    <input class="mt-2" id="uploadImage" type="file" name="image" onchange="PreviewImage();" />
                     <script type="text/javascript">
                         function PreviewImage() {
                             var oFReader = new FileReader();
@@ -26,16 +26,16 @@
                     <h2 class="h4 mb-3 fw-normal">Basic Information</h2>
                     <input type="hidden" name="type" value="update">
                     <div class="form-floating ">
-                        <input type="text" class=" form-control edit-name-field" name='usersName' id="floatingName" value=" <?php echo isset($_SESSION['usersName']) ? $_SESSION['usersName'] : ''; ?>">
+                        <input type="text" class=" form-control edit-name-field" name='usersName' id="floatingName">
                         <label for=" floatingName">Full Name</label>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control edit-name-field" name='phoneNo' id="phoneNo" value=" <?php echo isset($_SESSION['phoneNo']) ? $_SESSION['phoneNo'] : ''; ?>">
+                        <input type="text" class="form-control edit-name-field" name='phoneNo' id="phoneNo">
                         <label for="phoneNo">Phone No.</label>
                     </div>
                     <div class="form-floating">
-                        <input type="email" class="form-control edit-email-field" name='usersEmail' id="floatingInput" value=" <?php echo isset($_SESSION['usersEmail']) ? $_SESSION['usersEmail'] : ''; ?>">
-                        <input type="hidden" class="form-control edit-email-field" name='usersId' id="floatingInput" value=" <?php echo isset($_SESSION['usersId']) ? $_SESSION['usersId'] : ''; ?>">
+                        <input type="email" class="form-control edit-email-field" name='usersEmail' id="floatingInput">
+                        <input type="hidden" class="form-control edit-email-field" name='usersId' id="floatingInput">
                         <label for=" floatingInput">Email address</label>
                     </div>
                     <button class="w-20 btn btn-sm btn-primary save-changes" type="submit" name="save-changes">Save Changes</button>
@@ -47,7 +47,7 @@
             <form class="form-edit form-password ml-auto  d-flex gap-2 flex-column " style=" width: 400px;" method="post" action="Controllers/edit_controller.php">
                 <h2 class="h4 mb-3 fw-normal">Security</h2>
                 <input type="hidden" name="type" value="change">
-                <input type="hidden" name='usersEmail' id="floatingInput" value=" <?php echo isset($_SESSION['usersEmail']) ? $_SESSION['usersEmail'] : ''; ?>">
+                <input type="hidden" name='usersEmail' id="floatingInput">
                 <div class="form-floating">
                     <input type="password" class="form-control signup-pass-field" name='usersPwd' id="floatingPassword">
                     <label for="floatingPassword">Current Password</label>

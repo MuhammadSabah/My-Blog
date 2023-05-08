@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [\App\Http\Controllers\AuthController::class, 'showLoginForm']);
 // Blog
 
 Route::get('/blog', [\App\Http\Controllers\BlogPostController::class, 'index']);
