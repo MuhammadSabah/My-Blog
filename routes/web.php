@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [\App\Http\Controllers\AuthController::class, 'showLoginForm']);
-// Blog
 
+// Blog
 Route::get('/blog', [\App\Http\Controllers\BlogPostController::class, 'index']);
 
 Route::get('/blog/{blogPost}', [\App\Http\Controllers\BlogPostController::class, 'show']);
@@ -31,10 +31,15 @@ Route::put('/blog/{blogPost}/edit', [\App\Http\Controllers\BlogPostController::c
 
 Route::delete('/blog/{blogPost}', [\App\Http\Controllers\BlogPostController::class, 'destroy']);
 
+// Comment
+Route::post('/blog/{blogPost}', [\App\Http\Controllers\CommentController::class, 'store']);
+
 // User
+Route::get('/profile/{user}', [\App\Http\Controllers\UserController::class, 'index']);
 
-Route::get('/profile', [\App\Http\Controllers\UserController::class, 'index']);
+Route::put('/profile/{user}', [\App\Http\Controllers\UserController::class, 'update']);
 
+// Auth
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showLoginForm']);
 
 Route::get('/signup', [\App\Http\Controllers\AuthController::class, 'showSignupForm']);
@@ -43,4 +48,7 @@ Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 
 Auth::routes();
 
+// Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::delete('/home', [\App\Http\Controllers\UserController::class, 'destroy']);

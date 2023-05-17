@@ -10,9 +10,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('account.profile');
+        $viewed_user = $user->where('id', $user->id)->get();
+        $user = auth()->user();
+        return view('account.profile', ['user' => $viewed_user[0], 'auth_user' => $user]);
     }
 
     /**
@@ -52,14 +54,38 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        // if ($request->type == 'update') {
+        //     $user->update([
+        //         'name' => $request->name,
+        //         'email' => $request->email,
+
+        //     ]);
+
+        //     return redirect('profile/' . $user->id);
+        // }
+        $image = $request->file('image');
+        $path = $image->move("public/uploads", $image->getClientOriginalName());
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phoneNo' => $request->phoneNo,
+            'imageUrl' => $path
+        ]);
+
+        return redirect('profile/' . $user->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user, Request $request)
     {
-        //
+        $user->where('id', $request->id)->delete();
+        $user = auth()->user();
+        if ($user->isAdmin == 'true') {
+            return redirect('/home');
+        }
+        return redirect('/blog');
     }
 }

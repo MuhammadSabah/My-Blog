@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+        $users = User::all();
+        $blogs = BlogPost::all();
+        return view('home', [
+            'user' => $user,
+            'users' => $users,
+            'blogs' => $blogs
+        ]);
     }
 }

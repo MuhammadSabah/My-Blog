@@ -22,7 +22,14 @@
                         Username
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile" class="dropdown-item" href="#">
+                        @php
+                        $userId = Auth::user()->id
+                        $url = "/profile/{$userId}";
+                        @endphp
+                        <li><a href="{{$url}}" class="dropdown-item">
+                                <ion-icon class="ion-icon drop-down-icon"></ion-icon> ahdskjf
+                            </a></li>
+                        <li><a href="{{$url}}" class="dropdown-item">
                                 <ion-icon class="ion-icon drop-down-icon" name="settings"></ion-icon> Account
                             </a></li>
                         <li class="nav-item"> <a class="dropdown-item logout-btn" href="/logout"><ion-icon class="ion-icon drop-down-icon" name="log-out-outline"></ion-icon>Logout</a></li>

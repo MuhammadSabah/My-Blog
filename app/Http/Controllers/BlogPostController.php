@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class BlogPostController extends Controller
@@ -12,8 +14,19 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        $posts = BlogPost::all();
-        return view('blog.index', ['posts' => $posts]);
+        $user = auth()->user();
+        $users = User::all();
+        $blogs = BlogPost::all();
+        // check if user is admin
+        if ($user->isAdmin == 'true') {
+            return view('home', [
+                'user' => $user,
+                'posts' => $blogs,
+                'users' => $users,
+                'blogs' => $blogs
+            ]);
+        }
+        return view('blog.index', ['posts' => $blogs]);
     }
 
     /**
@@ -32,7 +45,6 @@ class BlogPostController extends Controller
         $newPost = BlogPost::create([
             'title' => $request->title,
             'body' => $request->body,
-            // TODO: Change this to the logged in user's ID
             'user_id' => $request->user()->id
         ]);
 
@@ -44,8 +56,12 @@ class BlogPostController extends Controller
      */
     public function show(BlogPost $blogPost)
     {
+        $comments = Comment::where('post_id', $blogPost->id)->get();
+        $user = auth()->user();
         return view('blog.show', [
+            'user' => $user,
             'post' => $blogPost,
+            'comments' => $comments
         ]);
     }
 
@@ -54,7 +70,9 @@ class BlogPostController extends Controller
      */
     public function edit(BlogPost $blogPost)
     {
+        $user = auth()->user();
         return view('blog.edit', [
+            'user' => $user,
             'post' => $blogPost,
         ]);
     }
@@ -78,7 +96,10 @@ class BlogPostController extends Controller
     public function destroy(BlogPost $blogPost)
     {
         $blogPost->delete();
-
+        $user = auth()->user();
+        if ($user->isAdmin == 'true') {
+            return redirect('/home');
+        }
         return redirect('/blog');
     }
 }
